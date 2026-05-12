@@ -5,6 +5,8 @@ import com.springboot.features.client.EmployeeClient;
 import com.springboot.features.dto.EmployeeDTO;
 import com.springboot.features.exception.ResourceNotFound;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class EmployeeClientImpl implements EmployeeClient {
 
     private final RestClient restClient;
 
+    Logger log = LoggerFactory.getLogger(EmployeeClientImpl.class);
+
     @Override
     public List<EmployeeDTO> getAllEmployees() {
         ApiResponse<List<EmployeeDTO>> response = restClient.get()
@@ -27,6 +31,8 @@ public class EmployeeClientImpl implements EmployeeClient {
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
                 });
+        log.debug("Successfully retried employee details");
+        log.info("Retrieved employees list : {} {} {}", 465, response, 9);
         return response.getData();
     }
 
@@ -38,7 +44,7 @@ public class EmployeeClientImpl implements EmployeeClient {
                     .body(employeeDTO)
                     .retrieve()
                     .onStatus(HttpStatusCode::is4xxClientError, ((request, response1) -> {
-                        System.out.println(new String(response1.getBody().readAllBytes()));
+                        log.error(new String(response1.getBody().readAllBytes()));
                         new ResourceNotFound("could not create employee");
                     }))
                     .body(new ParameterizedTypeReference<>() {
@@ -46,6 +52,7 @@ public class EmployeeClientImpl implements EmployeeClient {
 
             return response.getData();
         } catch (Exception e) {
+            log.error("Exception occurred in create employee", e);
             throw new RuntimeException(e);
         }
     }
@@ -53,6 +60,7 @@ public class EmployeeClientImpl implements EmployeeClient {
 
     @Override
     public Optional<EmployeeDTO> getEmployeeById(Long id) {
+        log.info("Trying to retrieve employee id : {}", id);
         ApiResponse<Optional<EmployeeDTO>> response = restClient.get()
                 .uri("/employee/{id}", id)
                 .retrieve()

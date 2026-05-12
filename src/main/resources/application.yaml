@@ -18,3 +18,10 @@ spring.devtools.restart.exclude:
 
 server.port: 9000
 employeeService.base.url: http://localhost:8080
+
+#logging conf
+logging.level.com.springboot.features.client: TRACE
+logging.pattern.console: "%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+logging.file.name: application.log
+logging.config: classpath:logback-spring.xml
+#logging.level.root: INFO
