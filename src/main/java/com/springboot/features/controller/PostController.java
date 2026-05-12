@@ -27,27 +27,20 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<PostDto>> getPost(@PathVariable Long id) {
-        ApiResponse<PostDto> response = ApiResponse.<PostDto>builder()
-                .data(postService.getPost(id))
-                .build();
+        ApiResponse<PostDto> response = new ApiResponse<>(postService.getPost(id));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<ApiResponse<PostDto>> createPost(@RequestBody PostDto postDto) {
-        ApiResponse<PostDto> response = ApiResponse.<PostDto>builder()
-                .data(postService.createPost(postDto))
-                .timeStamp(LocalDateTime.now())
-                .build();
+        ApiResponse<PostDto> response = new ApiResponse<>(postService.createPost(postDto));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<PostDto>> updatePost(@RequestBody PostDto postDto, @PathVariable Long id) {
-        ApiResponse<PostDto> response = ApiResponse.<PostDto>builder()
-                .data(postService.updatePost(id, postDto))
-                .build();
+        ApiResponse<PostDto> response = new ApiResponse<>(postService.updatePost(id, postDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

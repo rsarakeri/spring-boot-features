@@ -1,21 +1,31 @@
 package com.springboot.features.advice;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@Builder
+
+@Data
 public class ApiResponse<T> {
 
-    private T data;
-
+    //    @JsonFormat(pattern = "hh:mm:ss dd-MM-yyyy")
     private LocalDateTime timeStamp;
 
     private ApiError apiError;
 
+    private T  data;
+
+    public ApiResponse(){
+        this.timeStamp = LocalDateTime.now();
+    }
+
+    public ApiResponse(T data) {
+        this();
+        this.data = data;
+    }
+
+    public ApiResponse(ApiError apiError){
+        this();
+        this.apiError = apiError;
+    }
 }

@@ -16,9 +16,8 @@ public class GlobalException {
     public ResponseEntity<ApiError> handleException(Exception e) {
         ApiError apiError = ApiError
                 .builder()
-                .timestamp(LocalDateTime.now())
-                .error(e.getLocalizedMessage())
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .message(e.getLocalizedMessage())
+                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();
 
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -28,9 +27,9 @@ public class GlobalException {
     public ResponseEntity<ApiError> handleException(ResourceNotFound e) {
         ApiError apiError = ApiError
                 .builder()
-                .timestamp(LocalDateTime.now())
-                .error(e.getLocalizedMessage())
-                .status(HttpStatus.NOT_FOUND)
+                .message(e.getLocalizedMessage())
+//                ./h(e.getLocalizedMessage())
+                .httpStatus(HttpStatus.NOT_FOUND)
                 .build();
 
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
