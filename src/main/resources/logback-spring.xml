@@ -3,10 +3,20 @@
 <configuration>
 
     <property name="LOG_PATTERN"
-              value="%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
+              value="%yellow(%d{dd-MM-yyyy HH:mm:ss}) [%thread]  %highlight(%-5level) %cyan(%logger{36}) - %msg%n"/>
+    <!-- Console Appender -->
+    <appender name="CONSOLE"
+              class="ch.qos.logback.core.ConsoleAppender">
 
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+    </appender>
+    <!-- Rolling File Appender -->
     <appender name="ROLLING_FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
+
 
         <!-- Active Log File -->
         <file>logs/application.log</file>
@@ -38,6 +48,10 @@
     </appender>
 
     <root level="INFO">
+        <!-- Console -->
+        <appender-ref ref="CONSOLE"/>
+
+        <!-- File -->
         <appender-ref ref="ROLLING_FILE"/>
     </root>
 
