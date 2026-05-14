@@ -2,10 +2,13 @@ package com.springboot.features.service;
 
 import com.springboot.features.dto.PostDto;
 import com.springboot.features.entity.PostEntity;
+import com.springboot.features.entity.User;
 import com.springboot.features.exception.ResourceNotFound;
 import com.springboot.features.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
 
     private final PostRepository postRepository;
@@ -30,6 +34,9 @@ public class PostService {
     }
 
     public PostDto getPost(Long id) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        log.info("logged in user from security context : {}", user);
         PostEntity postEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFound("No Post Found for id "+ id));
         return modelMapper.map(postEntity, PostDto.class);
     }

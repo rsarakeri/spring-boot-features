@@ -2,10 +2,7 @@ package com.springboot.features.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class User implements UserDetails {
 
     @Id
@@ -25,6 +23,8 @@ public class User implements UserDetails {
     @Email
     @Column(unique = true)
     private String email;
+
+    private String name;
 
     private String password;
 
