@@ -2,6 +2,10 @@ package com.springboot.features.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,6 +13,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -20,6 +27,13 @@ public class User implements UserDetails {
     private String email;
 
     private String password;
+
+    public User(long l, String mail, String number) {
+        this.id = l;
+        email = mail;
+        password = number;
+
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

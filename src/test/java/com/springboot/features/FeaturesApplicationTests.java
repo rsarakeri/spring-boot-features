@@ -3,6 +3,8 @@ package com.springboot.features;
 import com.springboot.features.client.EmployeeClient;
 import com.springboot.features.client.impl.EmployeeClientImpl;
 import com.springboot.features.dto.EmployeeDTO;
+import com.springboot.features.entity.User;
+import com.springboot.features.service.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -20,12 +22,23 @@ import java.util.List;
 @Slf4j
 class FeaturesApplicationTests {
 
+    @Autowired
+    private JwtService jwtService;
 
     @Autowired
     private EmployeeClient employeeClient;
 
     @Test
     void contextLoads() {
+        User user = new User(45l, "as@gmai.com", "1234");
+
+        String token = jwtService.generateToke(user);
+
+        System.out.println(token);
+
+        Long id = jwtService.getUserIdFromToken(token);
+
+        System.out.println(id);
     }
 
     @Test
@@ -54,5 +67,7 @@ class FeaturesApplicationTests {
 
 
     }
+
+
 
 }

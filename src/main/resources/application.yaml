@@ -55,3 +55,5 @@ info:
 spring.security.user.name: rahul
 spring.security.user.password: rahul
 spring.security.user.roles : ADMIN
+
+jwt.scretKey: hbv342hb4u23hb23uir09fusjdf34fmsndfasdg34523f3e8ujoionsdqwqASDAW213ad
