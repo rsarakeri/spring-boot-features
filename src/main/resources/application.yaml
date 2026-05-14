@@ -48,3 +48,10 @@ info:
     author: rsarakeri@gmail.com
     documentation: NA
     version: 1.0.0-SNAPSHOT
+
+
+#security confs
+
+spring.security.user.name: rahul
+spring.security.user.password: rahul
+spring.security.user.roles : ADMIN
